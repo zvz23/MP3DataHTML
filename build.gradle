@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'org.zvz'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Version': version,
+                'Main-Class': 'mainpack.Main'
+    }
+    baseName = 'mp3datahtml'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
